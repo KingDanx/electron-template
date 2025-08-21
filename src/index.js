@@ -15,8 +15,6 @@ process.on("uncaughtException", (error) => {
 
 const logger = new LiteLogger(getResourcePath(), "log", "logs", 14);
 
-const TEMP_PATH = getResourcePath(path.join("temp"));
-
 let window;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -99,6 +97,7 @@ function getResourcePath(resourceRelativePath = null) {
 
 async function purgeTemp() {
   try {
+    const TEMP_PATH = getResourcePath(path.join("temp"));
     const files = await fs.readdir(TEMP_PATH);
 
     for (const file of files) {

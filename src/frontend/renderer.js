@@ -7,9 +7,9 @@
 export function count(number) {
   return new Promise((resolve, reject) => {
     console.log(number, "recieved value");
-    ipcRenderer.send("count", { number: number });
+    window.ipcRenderer.send("count", { number: number });
 
-    ipcRenderer.once("count", (response) => {
+    window.ipcRenderer.once("count", (response) => {
       try {
         console.log("count renderer: :", response);
         resolve(response);
@@ -22,5 +22,5 @@ export function count(number) {
 }
 
 export const windowAction = (action) => {
-  ipcRenderer.send(action);
+  window.ipcRenderer.send(action);
 };

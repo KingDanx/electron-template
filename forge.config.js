@@ -4,30 +4,51 @@ import { FuseV1Options, FuseVersion } from "@electron/fuses";
 export default {
   packagerConfig: {
     asar: true,
-    icon: "./icon/icon.ico",
+    icon: "./icon/icon", // Forge will pick icon.ico for Windows, icon.icns for macOS, and icon.png for Linux
     extraResource: ["./src/logs", "./src/temp", "./src/frontend/dist"],
   },
   rebuildConfig: {},
   makers: [
+    // Windows (Squirrel)
     {
       name: "@electron-forge/maker-squirrel",
+      platforms: ["win32"],
       config: {
-        name: "Electron Template", // This should be your application's machine-friendly name
-        authors: "Dan Prudhomme Jr", // Replace with your details
-        description: "A basic template for other projects to use", // Provide a short description of your application
+        name: "electron_template",
+        authors: "Dan Prudhomme Jr",
+        description: "A basic template for other projects to use",
       },
     },
+    // macOS
     {
       name: "@electron-forge/maker-zip",
       platforms: ["darwin"],
     },
+    // Linux: DEB
     {
       name: "@electron-forge/maker-deb",
-      config: {},
+      platforms: ["win32", "linux"],
+      config: {
+        options: {
+          maintainer: "Dan Prudhomme Jr",
+          homepage: "https://github.com/KingDanx/electron-template",
+          icon: "./icon/icon.png",
+          categories: ["Utility"],
+        },
+      },
     },
+    // Linux: RPM
     {
       name: "@electron-forge/maker-rpm",
-      config: {},
+      platforms: ["linux"],
+      config: {
+        options: {
+          maintainer: "Dan Prudhomme Jr",
+          homepage: "https://github.com/KingDanx/electron-template",
+          icon: "./icon/icon.png",
+          categories: ["Utility"],
+        },
+      },
     },
   ],
   plugins: [
@@ -35,8 +56,7 @@ export default {
       name: "@electron-forge/plugin-auto-unpack-natives",
       config: {},
     },
-    // Fuses are used to enable/disable various Electron functionality
-    // at package time, before code signing the application
+    // Fuses
     new FusesPlugin({
       version: FuseVersion.V1,
       [FuseV1Options.RunAsNode]: false,

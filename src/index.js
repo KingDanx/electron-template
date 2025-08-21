@@ -13,8 +13,6 @@ process.on("uncaughtException", (error) => {
   );
 });
 
-console.log(path.join(import.meta.dirname, "preload.js"));
-
 const logger = new LiteLogger(getResourcePath(), "log", "logs", 14);
 
 let window;

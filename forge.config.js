@@ -27,7 +27,7 @@ export default {
     // Linux: DEB
     {
       name: "@electron-forge/maker-deb",
-      platforms: ["win32", "linux"],
+      platforms: ["linux"],
       config: {
         options: {
           maintainer: "Dan Prudhomme Jr",

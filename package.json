@@ -1,15 +1,16 @@
 {
   "name": "electron-template",
   "productName": "electron-template",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "My Electron application description",
   "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
+    "start": "concurrently \"cd src/frontend && npm run dev\" \"electron-forge start\"",
+    "package": "cd src/frontend && npm run build && cd ../.. &&  electron-forge package",
+    "make": "cd src/frontend && npm run build && cd ../.. && electron-forge make",
     "publish": "electron-forge publish",
+    "install:all": "cd src/frontend && npm install && cd ../.. && npm install",
     "lint": "echo \"No linting configured\""
   },
   "keywords": [],
@@ -20,6 +21,7 @@
   "license": "MIT",
   "dependencies": {
     "@kingdanx/litelogger": "^1.1.0",
+    "concurrently": "^9.2.0",
     "electron-is-dev": "^3.0.1",
     "electron-squirrel-startup": "^1.0.1"
   },

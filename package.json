@@ -21,19 +21,22 @@
   "license": "MIT",
   "dependencies": {
     "@kingdanx/litelogger": "^1.1.0",
-    "concurrently": "^9.2.0",
+    "concurrently": "^9.2.1",
     "electron-is-dev": "^3.0.1",
     "electron-squirrel-startup": "^1.0.1"
   },
+  "overrides": {
+    "tar": "^7.4.3"
+  },
   "devDependencies": {
-    "@electron-forge/cli": "^7.8.3",
-    "@electron-forge/maker-deb": "^7.8.3",
-    "@electron-forge/maker-rpm": "^7.8.3",
-    "@electron-forge/maker-squirrel": "^7.8.3",
-    "@electron-forge/maker-zip": "^7.8.3",
-    "@electron-forge/plugin-auto-unpack-natives": "^7.8.3",
-    "@electron-forge/plugin-fuses": "^7.8.3",
+    "@electron-forge/cli": "^7.11.1",
+    "@electron-forge/maker-deb": "^7.11.1",
+    "@electron-forge/maker-rpm": "^7.11.1",
+    "@electron-forge/maker-squirrel": "^7.11.1",
+    "@electron-forge/maker-zip": "^7.11.1",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.11.1",
+    "@electron-forge/plugin-fuses": "^7.11.1",
     "@electron/fuses": "^1.8.0",
-    "electron": "37.3.1"
+    "electron": "^41.2.0"
   }
 }

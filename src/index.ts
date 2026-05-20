@@ -3,7 +3,7 @@ import isInstall from "electron-squirrel-startup";
 import fs from "fs/promises";
 import path from "node:path";
 import isDev from "electron-is-dev";
-import LiteLogger from "@kingdanx/litelogger";
+import logger from "./modules/logger.js";
 
 import type { IpcMainInvokeEvent } from "electron";
 
@@ -14,8 +14,6 @@ process.on("uncaughtException", (error) => {
     `An error occurred: ${error.message}`,
   );
 });
-
-const logger = new LiteLogger(getResourcePath(), "log", "logs", 14);
 
 let window: BrowserWindow | undefined;
 

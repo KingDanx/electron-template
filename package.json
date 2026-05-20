@@ -1,7 +1,7 @@
 {
   "name": "electron-template",
   "productName": "electron-template",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "My Electron application description",
   "main": "src/index.js",
   "type": "module",

@@ -2,7 +2,8 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "nodenext",
+    "allowImportingTsExtensions": true,
     "strict": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -10,8 +11,8 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "noEmit": true,
     "types": ["node"]
-    // Deleted "baseUrl": "." here
   },
-  "include": ["src/index.ts", "src/preload.js", "src/frontend/src/**/*"]
+  "include": ["src/index.ts", "src/preload.js", "src/modules/*"]
 }

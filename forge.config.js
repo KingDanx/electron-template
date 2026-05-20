@@ -5,7 +5,21 @@ export default {
   packagerConfig: {
     asar: true,
     icon: "./icon/icon", // Forge will pick icon.ico for Windows, icon.icns for macOS, and icon.png for Linux
-    extraResource: ["./src/logs", "./src/temp", "./src/frontend/dist"],
+    extraResource: ["./src/logs", "./src/temp"],
+    ignore: [
+      /^\/src\/frontend\/(?!dist)/,
+      /^\/src\/modules/,
+      /^\/src\/logs/,
+      /^\/src\/temp/,
+      /^\/src\/types/,
+      /^\/\.env/,
+      /^\/\.gitignore/,
+      /^\/forge\.config\.js/,
+      /^\/README\.md/,
+      /^\/src\/preload\.js/,
+      /\.ts$/,
+      /^\/tsconfig\.json$/,
+    ],
   },
   rebuildConfig: {},
   makers: [

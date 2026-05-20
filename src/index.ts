@@ -27,6 +27,7 @@ if (isInstall) {
 console.log(path.join(import.meta.dirname, "preload.ts"));
 
 function createWindow(): BrowserWindow {
+  const preload = isDev ? "preload.js" : "preload.bundle.js";
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 800,
@@ -35,7 +36,7 @@ function createWindow(): BrowserWindow {
     webPreferences: {
       contextIsolation: true,
       webSecurity: !isDev,
-      preload: path.join(import.meta.dirname, "preload.js"),
+      preload: path.join(import.meta.dirname, preload),
     },
   });
 

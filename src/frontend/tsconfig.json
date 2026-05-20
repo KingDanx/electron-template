@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "skipLibCheck": true,
+
+    /* Bundler mode configuration */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx", // Change to "preserve" if using Vue, or omit if using vanilla JS/TS
+
+    /* Linting / Strictness */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["src/**/*"]
+}

@@ -52,10 +52,6 @@ export default {
     },
   ],
   plugins: [
-    {
-      name: "@electron-forge/plugin-auto-unpack-natives",
-      config: {},
-    },
     // Fuses
     new FusesPlugin({
       version: FuseVersion.V1,

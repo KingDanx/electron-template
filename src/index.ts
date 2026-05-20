@@ -5,24 +5,28 @@ import path from "node:path";
 import isDev from "electron-is-dev";
 import LiteLogger from "@kingdanx/litelogger";
 
+import type { IpcMainInvokeEvent } from "electron";
+
 process.on("uncaughtException", (error) => {
   console.error("Unhandled Exception:", error);
   dialog.showErrorBox(
     "Unhandled Exception",
-    `An error occurred: ${error.message}`
+    `An error occurred: ${error.message}`,
   );
 });
 
 const logger = new LiteLogger(getResourcePath(), "log", "logs", 14);
 
-let window;
+let window: BrowserWindow | undefined;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (isInstall) {
   app.quit();
 }
 
-const createWindow = () => {
+console.log(path.join(import.meta.dirname, "preload.ts"));
+
+function createWindow(): BrowserWindow {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 800,
@@ -48,14 +52,14 @@ const createWindow = () => {
     mainWindow.webContents.openDevTools();
   }
 
-  window = mainWindow;
-};
+  return mainWindow;
+}
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-  createWindow();
+  window = createWindow();
   purgeTemp();
   initListeners();
 
@@ -63,7 +67,7 @@ app.whenReady().then(() => {
   // dock icon is clicked and there are no other windows open.
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow();
+      window = createWindow();
     }
   });
 });
@@ -80,19 +84,17 @@ app.on("window-all-closed", () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
-function getResourcePath(resourceRelativePath = null) {
+function getResourcePath(resourceRelativePath?: string | undefined) {
   if (isDev) {
     if (resourceRelativePath) {
       return path.join(import.meta.dirname, resourceRelativePath);
-    } else {
-      return import.meta.dirname;
     }
+    return import.meta.dirname;
   }
   if (resourceRelativePath) {
     return path.join(process.resourcesPath, resourceRelativePath);
-  } else {
-    return process.resourcesPath;
   }
+  return process.resourcesPath;
 }
 
 async function purgeTemp() {
@@ -104,29 +106,25 @@ async function purgeTemp() {
       const filePath = path.join(TEMP_PATH, file);
       await fs.unlink(filePath);
     }
-  } catch (e) {
+  } catch (e: any) {
     logger.error(`Purge temp error: ${e.toString()}`);
   }
 }
 
-function count(event, { number }) {
-  console.log("index.js count: ", number);
-  window.webContents.send("count", {
-    success: true,
-    data: { number },
-  });
+function count(_: IpcMainInvokeEvent, number: number): number {
+  return number++;
 }
 
 function initListeners() {
-  ipcMain.on("count", count);
+  ipcMain.handle("count", count);
 
-  ipcMain.on("minimize-window", () => window.minimize());
+  ipcMain.on("minimize-window", () => window && window.minimize());
   ipcMain.on("maximize-window", () => {
-    if (window.isMaximized()) {
+    if (window && window.isMaximized()) {
       window.unmaximize();
-    } else {
+    } else if (window) {
       window.maximize();
     }
   });
-  ipcMain.on("close-window", () => window.close());
+  ipcMain.on("close-window", () => window && window.close());
 }
